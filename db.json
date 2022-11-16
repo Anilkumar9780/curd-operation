@@ -1,0 +1,33 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "name": "Tom",
+      "email": "tom@gmail.com",
+      "username": "@tom",
+      "created": "10/11/2022"
+    },
+    {
+      "id": 3,
+      "name": "john",
+      "email": "john@gmail.com",
+      "username": "@john123",
+      "created": "10/11/2022"
+    },
+    {
+      "id": 4,
+      "name": "john",
+      "email": "123@gmail.com",
+      "username": "@john",
+      "created": "10/11/2022"
+    }
+  ],
+  "users": [
+    {
+      "id": 2,
+      "fullName": "sunil",
+      "email": "123@gmail.com",
+      "password": "MTIzNDU2"
+    }
+  ]
+}
