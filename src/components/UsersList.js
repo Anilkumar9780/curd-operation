@@ -1,66 +1,39 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Packages
 import { array, func, bool } from "prop-types";
 
 // material-ui component
-import { Table } from "@mui/material";
-import { TableBody } from "@mui/material";
-import { TableCell } from "@mui/material";
-import { TableContainer } from "@mui/material";
-import { TableHead } from "@mui/material";
-import { TableRow } from "@mui/material";
-import { Paper } from "@mui/material";
-import { IconButton } from "@mui/material";
-import { Edit } from '@mui/icons-material';
-import { Delete } from "@mui/icons-material";
-import { Visibility } from '@mui/icons-material';
-import { Button } from '@mui/material';
-import { DialogActions } from '@mui/material';
-import { DialogContent } from '@mui/material';
-import { DialogTitle } from '@mui/material';
-import { Dialog } from '@material-ui/core';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Dialog
+} from "@mui/material";
+import {
+  Edit,
+  Delete,
+  Visibility
+} from '@mui/icons-material';
 
-const UserList = ({
+export const UserList = ({
   // props
-  userData,
-  handleUpdateUserForm,
+  usersDataList,
+  handleEditUserData,
   handleDeleteUser,
-  handleUserDetailPage,
-  handleOpenDeletePopupMessage,
+  handleOpenDeleteConfirmPopupMessage,
   deleteConfirmPopupMessage,
-  handleCloseModal
+  handleCloseModal,
 }) => {
-  // state
-  const [data, setData] = useState([]);
-  const dragItem = useRef(null);
-  const dragOverItem = useRef(null);
-
-  /**
-   * dragged and droppable 
-   * user List 
-   */
-  const handleSort = () => {
-    let item = [...data];
-    //remove and save the dragged item content 
-    const draggedItemContent = item.splice(dragItem.current, 1)[0]
-    //switch the position
-    item.splice(dragOverItem.current, 0, draggedItemContent)
-    //reset the position ref in the User list 
-    dragItem.current = null;
-    dragOverItem.current = null;
-    //update the actual array
-    setData(item)
-  };
-
-  /**
-   * passing dependency 
-   * set the data other state
-   */
-  useEffect(() => {
-    setData(userData)
-  }, [userData])
-
   return (
     <div>
       <TableContainer component={Paper}>
@@ -76,16 +49,11 @@ const UserList = ({
           </TableHead>
           <TableBody>
             {/* mapping users */}
-            {data?.length !== 0 ? (data?.map((user, index) => {
+            {usersDataList?.length !== 0 ? (usersDataList?.map((user, index) => {
               return (
                 <TableRow
                   key={index}
                   className="list-item"
-                  draggable
-                  onDragStart={() => (dragItem.current = index)}
-                  onDragEnter={() => (dragOverItem.current = index)}
-                  onDragEnd={handleSort}
-                  onDragOver={(event) => event.preventDefault()}
                 >
                   <TableCell component="th" scope="user">{user.name}</TableCell>
                   <TableCell align="right">{user.email}</TableCell>
@@ -96,7 +64,7 @@ const UserList = ({
                     {/* visibility(view) button */}
                     <IconButton
                       aria-label='Visibility'
-                      onClick={() => handleUserDetailPage(user.id)}
+                    // onClick={() => handleUserDetailPage(user.id)}
                     >
                       <Visibility />
                     </IconButton>
@@ -104,7 +72,7 @@ const UserList = ({
                     {/* Edit Button */}
                     <IconButton
                       aria-label="Edit"
-                      onClick={() => handleUpdateUserForm(user)}
+                      onClick={() => handleEditUserData(user)}
                     >
                       <Edit />
                     </IconButton>
@@ -115,7 +83,7 @@ const UserList = ({
                       onClose={handleCloseModal}
                     >
                       <DialogTitle style={{ width: '400px', height: '50px', color: 'red' }} >Are you sure?</DialogTitle>
-                      <DialogContent sx={{color:'red'}}>
+                      <DialogContent sx={{ color: 'red' }}>
                         This will premanenlty Delete User!
                       </DialogContent>
                       <DialogActions>
@@ -141,7 +109,7 @@ const UserList = ({
                     {/* Delete Confirm Popup Message Button */}
                     <IconButton
                       aria-label="Delete"
-                      onClick={handleOpenDeletePopupMessage}
+                      onClick={handleOpenDeleteConfirmPopupMessage}
                     >
                       <Delete />
                     </IconButton>
@@ -160,7 +128,6 @@ const UserList = ({
     </div>
   )
 }
-export { UserList };
 
 /**
  * Component props Types
